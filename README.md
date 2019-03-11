@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 Btrade API
 =====
 
@@ -722,3 +723,6 @@ __[Output Parameter]__
 
 
 
+=======
+# open_api_en
+>>>>>>> branch 'master' of https://github.com/Btrade-kr/open_api_en.git
