@@ -706,7 +706,7 @@ __[Response]__
 
 #### 4-2. Exception
 
-|&nbsp;&nbsp;&nbsp;Status Value&nbsp;&nbsp;&nbsp;|Description|
+|&nbsp;&nbsp;&nbsp;Status Value&nbsp;&nbsp;&nbsp;|Description| 
 |:------------:|:---------:|
 |0001|Wrong currency entered|
 |0002|Order id is not exist|
