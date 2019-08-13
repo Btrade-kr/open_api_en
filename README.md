@@ -60,7 +60,7 @@
 
 ### 1. Public API
 
-#### 1-1.Ticker - Final trading information of Btrade Exchange <span style="color:red">(Deprecated)</span>
+#### 1-1. Ticker - Final trading information of Btrade Exchange <span style="color:red">(Deprecated)</span>
 
 __[GET]__ &nbsp;&nbsp;&nbsp;```https://api.btrade.co.kr/api/ticker/currency/{coin_code}```
 
@@ -113,7 +113,7 @@ __[Response]__
 
 &nbsp;
 ---
-#### 1-2.Ticker - Final trading information of Btrade Exchange (Added market information)
+#### 1-2. Ticker - Final trading information of Btrade Exchange (Added market information)
 
 __[GET]__ &nbsp;&nbsp;&nbsp;```https://api.btrade.co.kr/api/v1/ticker/currency/{coin_code}```
 
@@ -181,7 +181,7 @@ __[Response]__
 &nbsp;
 ---
 
-#### 1-3.Orderbook - Exchange's Sell/Buy order history info
+#### 1-3. Orderbook - Exchange's Sell/Buy order history info
 
 __[GET]__ &nbsp;&nbsp;&nbsp;```https://api.btrade.co.kr/api/orderbook/currency/{coin_code}```
 
@@ -248,7 +248,7 @@ __[Response]__
 &nbsp;
 ### 2. Token
 
-#### 2-1.Create - Initial Token Generation
+#### 2-1. Create - Initial Token Generation
 
 __[POST]__ &nbsp;&nbsp;&nbsp;```https://api.btrade.co.kr/api/v1/access_token```
 
@@ -313,7 +313,7 @@ __[Response]__
 &nbsp;
 ---
 
-#### 2-2.Refresh - Refreshing Access Token
+#### 2-2. Refresh - Refreshing Access Token
 
 __[POST]__&nbsp;&nbsp;&nbsp;```https://api.btrade.co.kr/api/v1/access_token```
 
@@ -375,7 +375,7 @@ __[Response]__
 &nbsp;
 ### 3. Private API
 
-#### 3-1.Account - View user's Info
+#### 3-1. Account - View user's Info
 
 __[GET]__ &nbsp;&nbsp;&nbsp;```https://api.btrade.co.kr/api/private/v1/account?currency={currency}```
 
@@ -425,7 +425,7 @@ __[Response]__
 
 &nbsp;
 ---
-#### 3-2.Balance - User Wallet Info
+#### 3-2. Balance - User Wallet Info
 
 __[GET]__ &nbsp;&nbsp;&nbsp;```https://api.btrade.co.kr/api/private/v1/balance?currency={currency}```
 
@@ -475,7 +475,7 @@ __[Response]__
 &nbsp;
 ---
 
-#### 3-3.Transaction - Trade History
+#### 3-3. Transaction - Trade History
 
 __[GET]__ 
 
@@ -564,7 +564,7 @@ __[Response]__
 &nbsp;
 ---
 
-#### 3-4.Cancel - Cancel Open Orders (Sell/Buy). 
+#### 3-4. Cancel - Cancel Open Orders (Sell/Buy). 
 
 __[POST]__&nbsp;&nbsp;&nbsp;``https://api.btrade.co.kr/api/private/v1/order/cancel``
 
@@ -619,7 +619,7 @@ __[Response]__
 &nbsp;
 ---
 
-### 3-5.Place - Place and Execute orders (Sell/Buy).
+### 3-5. Place - Place and Execute orders (Sell/Buy).
 
 __[POST]__&nbsp;&nbsp;&nbsp;``https://api.btrade.co.kr/api/private/v1/order/place``
 
