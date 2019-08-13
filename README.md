@@ -1,11 +1,9 @@
 
-Btrade API
-=====
-
+# [Btrade API Document for Developer]
 &nbsp;
 
-### API Info
----
+### [API Info]
+
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Btrade provides an API for developers to help them develop a variety of apps and programs.
 
@@ -21,30 +19,48 @@ Btrade API
 
 &nbsp;
 
-### API Notice
 ---
-
-#### Open API Changes Guide (-)
-
-&nbsp;&nbsp;&nbsp;
-
-
+&nbsp;
+### [API Notice]
+#### Open API Changes Guide
 ##### &nbsp;&nbsp;&nbsp; <Open API Changes>
 
-&nbsp;&nbsp;&nbsp;The change will take effect from __2018.10.10 11:00 p.m.__,
-
-&nbsp;&nbsp;&nbsp;so please check the details and time of application before applying it.
+&nbsp;&nbsp;&nbsp;The last trading information API(ticker) on the previous exchange has been deprecated,<br/>&nbsp;&nbsp;&nbsp;and a Ticker with market information has been added. 
 
 &nbsp;
 
-&nbsp;
-
-### Reference
 ---
 
-#### 1. Public API
+&nbsp;
 
-#### Ticker - Final trading information of Btrade Exchange
+### [INDEX]
+### 1. Public API
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1-1. Ticker1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; - Final trading information of Btrade Exchange <span style="color:red">(Deprecated)</span> <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1-2. Ticker2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; - Final trading information of Btrade Exchange (Added market information) <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1-3. Orderbook&nbsp; - Exchange's Sell / Buy order history info
+ <br/>
+### 2. Token
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2-1. Create&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; - Initial Token Generation <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2-2. Refresh&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; - Refreshing Access Token <br/>
+### 3. Private API
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3-1. Account &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- View user's Info <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3-2. Balance &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- User Wallet Info <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3-3. Transaction - Trade History <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3-4. Cancel &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Cancel Open Orders (Sell / Buy) <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3-5. Place &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Place and Execute orders (Sell / Buy) <br/>
+### 4. Status
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;4-1. Token Error <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;4-2. Exception <br/>
+
+&nbsp;
+
+---
+&nbsp;
+### [Reference]
+
+### 1. Public API
+
+#### 1-1.Ticker - Final trading information of Btrade Exchange <span style="color:red">(Deprecated)</span>
 
 __[GET]__ &nbsp;&nbsp;&nbsp;```https://api.btrade.co.kr/api/ticker/currency/{coin_code}```
 
@@ -71,15 +87,15 @@ __[Response Body]__
 }
 ```
 
-__[Input Parameter]__
+__[Input Parameters]__
 
 |&nbsp;&nbsp;&nbsp;Parameter Name&nbsp;&nbsp;&nbsp;|Description|
 |:------------:|:---------:|
 |coin_code|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Coin Name (ALL, BTC, ETH, ETC, LTC, ZEC, etc.)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|
 
-__[Output Parameters]__
+__[Response]__
 
-|&nbsp;&nbsp;&nbsp;Parameter Name&nbsp;&nbsp;&nbsp;|Description|
+|&nbsp;&nbsp;&nbsp;Response Field&nbsp;&nbsp;&nbsp;|Description|
 |:------------:|:---------:|
 |status: 0000|Normal|
 |open_price|Opening price in last 24 hours|
@@ -96,8 +112,76 @@ __[Output Parameters]__
 
 
 &nbsp;
+---
+#### 1-2.Ticker - Final trading information of Btrade Exchange (Added market information)
 
-#### Orderbook - Exchange's Sell/Buy order history info
+__[GET]__ &nbsp;&nbsp;&nbsp;```https://api.btrade.co.kr/api/v1/ticker/currency/{coin_code}```
+
+__[Curl]__ &nbsp;&nbsp;&nbsp;```curl -X GET --header 'Accept: application/json' 'https://api.btrade.co.kr/api/v1/ticker/currency/{coin_code}'```
+
+__[Response Body]__
+
+```
+{
+    "status": "0000",
+    "data": {
+        "KRW": {
+            "open_price": "1000",
+            "close_price": "10001000",
+            "low": "1000",
+            "high": "10003000",
+            "average_price": "8594071.364285713",
+            "units_traded": "6.014550000000000000",
+            "volume_1day": "6.014550000000000000",
+            "volume_7day": "30.019550000000000000",
+            "buy_price": "0010001000.00000000",
+            "sell_price": "0000000000.00000000",
+            "date": 1564475297693
+        },
+        "BTC": {
+            "open_price": "1.12345678",
+            "close_price": "1.12345678",
+            "low": "1.12345678",
+            "high": "1.12345678",
+            "average_price": "1.123456780000000000000000000000",
+            "units_traded": "2.000000000000000000",
+            "volume_1day": "2.000000000000000000",
+            "volume_7day": "2.000000000000000000",
+            "buy_price": "0000000001.12345678",
+            "sell_price": "0000000000.00000000",
+            "date": 1564475297863
+        }
+    }
+}
+```
+
+__[Input Parameters]__
+
+|&nbsp;&nbsp;&nbsp;Parameter Name&nbsp;&nbsp;&nbsp;|Description|
+|:------------:|:---------:|
+|coin_code|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Coin Name (ALL, BTC, ETH, ETC, LTC, ZEC, etc.)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|
+
+__[Response]__
+
+|&nbsp;&nbsp;&nbsp;Response Field&nbsp;&nbsp;&nbsp;|Description|
+|:------------:|:---------:|
+|status: 0000|Normal|
+|open_price|Opening price in last 24 hours|
+|close_price|Closing price in last 24 hours|
+|low|Lowest price in last 24 hours|
+|High|Highest price in last 24 hours|
+|average_price|Average price in last 24 hours|
+|units_traded|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Currency trading volume in last 24 hours&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|
+|volume_1day|Currency trading volume for the last 1 day|
+|volume_7day|Currency trading volume for the last 7 days|
+|buy_price|Highest buy price in pending orders|
+|sell_price|Lowest sell price in pending orders|
+|date|Current Timestamp|
+
+&nbsp;
+---
+
+#### 1-3.Orderbook - Exchange's Sell/Buy order history info
 
 __[GET]__ &nbsp;&nbsp;&nbsp;```https://api.btrade.co.kr/api/orderbook/currency/{coin_code}```
 
@@ -123,46 +207,6 @@ __[Response Body]__
         "it_market_cost": "0000000000.00000000",
         "nResCoin": "00000000.00000000"
       },
-      {
-        "it_action": "buy",
-        "it_market_cost": "0000000000.00000000",
-        "nResCoin": "00000000.00000000"
-      },
-      {
-        "it_action": "buy",
-        "it_market_cost": "0000000000.00000000",
-        "nResCoin": "00000000.00000000"
-      },
-      {
-        "it_action": "buy",
-        "it_market_cost": "0000000000.00000000",
-        "nResCoin": "00000000.00000000"
-      },
-      {
-        "it_action": "buy",
-        "it_market_cost": "0000000000.00000000",
-        "nResCoin": "00000000.00000000"
-      },
-      {
-        "it_action": "buy",
-        "it_market_cost": "0000000000.00000000",
-        "nResCoin": "00000000.00000000"
-      },
-      {
-        "it_action": "buy",
-        "it_market_cost": "0000000000.00000000",
-        "nResCoin": "00000000.00000000"
-      },
-      {
-        "it_action": "buy",
-        "it_market_cost": "0000000000.00000000",
-        "nResCoin": "00000000.00000000"
-      },
-      {
-        "it_action": "buy",
-        "it_market_cost": "0000000000.00000000",
-        "nResCoin": "00000000.00000000"
-      }
     ],
     "asks": [
       {
@@ -175,61 +219,21 @@ __[Response Body]__
         "it_market_cost": "0000000000.00000000",
         "nResCoin": "00000000.00000000"
       },
-      {
-        "it_action": "sell",
-        "it_market_cost": "0000000000.00000000",
-        "nResCoin": "00000000.00000000"
-      },
-      {
-        "it_action": "sell",
-        "it_market_cost": "0000000000.00000000",
-        "nResCoin": "00000000.00000000"
-      },
-      {
-        "it_action": "sell",
-        "it_market_cost": "0000000000.00000000",
-        "nResCoin": "00000000.00000000"
-      },
-      {
-        "it_action": "sell",
-        "it_market_cost": "0000000000.00000000",
-        "nResCoin": "00000000.00000000"
-      },
-      {
-        "it_action": "sell",
-        "it_market_cost": "0000000000.00000000",
-        "nResCoin": "00000000.00000000"
-      },
-      {
-        "it_action": "sell",
-        "it_market_cost": "0000000000.00000000",
-        "nResCoin": "00000000.00000000"
-      },
-      {
-        "it_action": "sell",
-        "it_market_cost": "0000000000.00000000",
-        "nResCoin": "00000000.00000000"
-      },
-      {
-        "it_action": "sell",
-        "it_market_cost": "0000000000.00000000",
-        "nResCoin": "00000000.00000000"
-      }
     ]
   }
 }
 ````
 
 
-__[Input Parameter]__
+__[Input Parameters]__
 
 |&nbsp;&nbsp;&nbsp;Parameter Name&nbsp;&nbsp;&nbsp;|Description|
 |:------------:|:---------:|
 |coin_code|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Coin Name (BTC, ETH, ETC, LTC, ZEC, etc.)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
-__[Output Parameters]__
+__[Response]__
 
-|&nbsp;&nbsp;&nbsp;Parameter Name&nbsp;&nbsp;&nbsp;|Description|
+|&nbsp;&nbsp;&nbsp;Response Field&nbsp;&nbsp;&nbsp;|Description|
 |:------------:|:---------:|
 |timestamp|Current Time|
 |order_currency|Coin|
@@ -240,12 +244,11 @@ __[Output Parameters]__
 
 &nbsp;
 
-&nbsp;
-
-#### 2. Token
 ---
+&nbsp;
+### 2. Token
 
-#### Create - Initial Token Generation
+#### 2-1.Create - Initial Token Generation
 
 __[POST]__ &nbsp;&nbsp;&nbsp;```https://api.btrade.co.kr/api/v1/access_token```
 
@@ -286,7 +289,7 @@ __[Response Body]__
 }
 ```
 
-__[Input Parameter]__
+__[Input Parameters]__
 
 |&nbsp;&nbsp;&nbsp;Parameter Name&nbsp;&nbsp;&nbsp;|Description|
 |:------------:|:---------:|
@@ -296,9 +299,9 @@ __[Input Parameter]__
 |grant_type|APIKEY|
 |expires_in|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Access Token Access Token Expiration Time<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(Minute Time, min 30 minutes to max 60 minutes)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|
 
-__[Output Parameter]__
+__[Response]__
 
-|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Parmeter Name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|Description|
+|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Response Field&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|Description|
 |:------------:|:---------:|
 |status| 0000: Normal / others: error|
 |message|Result Message|
@@ -308,10 +311,11 @@ __[Output Parameter]__
 |refresh_token_expire|Refresh Token Expiration Time (Unix Time)|
 
 &nbsp;
+---
 
-#### Refresh - Refreshing Access Token
+#### 2-2.Refresh - Refreshing Access Token
 
-__[POST]__
+__[POST]__&nbsp;&nbsp;&nbsp;```https://api.btrade.co.kr/api/v1/access_token```
 
 ```
 {
@@ -346,7 +350,7 @@ __[Response Body]__
 }
 ```
 
-__[Input Parameter]__
+__[Input Parameters]__
 
 |&nbsp;&nbsp;&nbsp;Parameter Name&nbsp;&nbsp;&nbsp;|Description|
 |:------------:|:---------:|
@@ -354,9 +358,9 @@ __[Input Parameter]__
 |expires_in|Access Token Expiration Time (Minute Time, min 30 minutes to max 60 minutes)|
 |grant_type|REFRESH|
 
-__[Output Parameter]__
+__[Response]__
 
-|&nbsp;&nbsp;&nbsp;Parameter Name&nbsp;&nbsp;&nbsp;|Description|
+|&nbsp;&nbsp;&nbsp;Response Field&nbsp;&nbsp;&nbsp;|Description|
 |:------------:|:---------:|
 |status|0000: Normal / others: error|
 |message| Result Message|
@@ -367,12 +371,11 @@ __[Output Parameter]__
 
 &nbsp;
 
-&nbsp;
-
-#### 3. Private API
 ---
+&nbsp;
+### 3. Private API
 
-#### Account - View user's Info
+#### 3-1.Account - View user's Info
 
 __[GET]__ &nbsp;&nbsp;&nbsp;```https://api.btrade.co.kr/api/private/v1/account?currency={currency}```
 
@@ -402,7 +405,7 @@ __[Input Header]__
 |:------------:|:---------:|
 |Authorization|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Access Token&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|
 
-__[Input Parameter]__
+__[Input Parameters]__
 
 |&nbsp;&nbsp;&nbsp;Parameter Name&nbsp;&nbsp;&nbsp;|Description|
 |:------------:|:---------:|
@@ -410,9 +413,9 @@ __[Input Parameter]__
 
 
 
-__[Output Parameter]__
+__[Response]__
 
-|&nbsp;&nbsp;&nbsp;Parameter Name&nbsp;&nbsp;&nbsp;|Description|
+|&nbsp;&nbsp;&nbsp;Response Field&nbsp;&nbsp;&nbsp;|Description|
 |:------------:|:---------:|
 |status|0000: Normal / others: error|
 |account_id|User Unique Number|
@@ -421,8 +424,8 @@ __[Output Parameter]__
 |created|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Join Time (Unix Time)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|
 
 &nbsp;
-
-#### Balance - User Wallet Info
+---
+#### 3-2.Balance - User Wallet Info
 
 __[GET]__ &nbsp;&nbsp;&nbsp;```https://api.btrade.co.kr/api/private/v1/balance?currency={currency}```
 
@@ -454,15 +457,15 @@ __[Input Header]__
 |:------------:|:---------:|
 |Authorization|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Access Token&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|
 
-__[Input Parameter]__
+__[Input Parameters]__
 
 |&nbsp;&nbsp;&nbsp;Parameter Name&nbsp;&nbsp;&nbsp;|Description|
 |:------------:|:---------:|
 |currency|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Coin Name (ALL, BTC, ETH, ETC, LTC, ZEC, etc.)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|
 
-__[Output Parameter]__
+__[Response]__
 
-|&nbsp;&nbsp;&nbsp;Parameter Name&nbsp;&nbsp;&nbsp;|Description|
+|&nbsp;&nbsp;&nbsp;Response Field&nbsp;&nbsp;&nbsp;|Description|
 |:------------:|:---------:|
 |status|0000: Normal / others: error|
 |total_{currency}|Total Currency|
@@ -470,9 +473,9 @@ __[Output Parameter]__
 |available_{currency}|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Available Currency&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|
 
 &nbsp;
-&nbsp;
+---
 
-#### Transaction - Trade History
+#### 3-3.Transaction - Trade History
 
 __[GET]__ 
 
@@ -535,7 +538,7 @@ __[Input Header]__
 |Authorization|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Access Token&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|
 
 
-__[Input Parameter]__
+__[Input Parameters]__
 
 |&nbsp;&nbsp;&nbsp;Parameter Name&nbsp;&nbsp;&nbsp;|Description|
 |:------------:|:---------:|
@@ -543,9 +546,9 @@ __[Input Parameter]__
 |deal_status|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Status - 0 (total), 1 (sell), 2 (buy), 3 (cancel), 4 (correct)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|
 |trd_status|Order Status - OK, WAIT|
 
-__[Output Parameter]__
+__[Response]__
 
-|&nbsp;&nbsp;&nbsp;Parameter Name&nbsp;&nbsp;&nbsp;|Description|
+|&nbsp;&nbsp;&nbsp;Response Field&nbsp;&nbsp;&nbsp;|Description|
 |:------------:|:---------:|
 |status|0000: Normal / others: error|
 |search|0 (total), 1 (sell), 2 (buy), 3 (deposit), 4 (withdraw)|
@@ -559,11 +562,11 @@ __[Output Parameter]__
 |{currency}1krw|Usual Market Price|
 
 &nbsp;
-&nbsp;
+---
 
-### Cancel - Cancel Open Orders (Sell/Buy). 
+#### 3-4.Cancel - Cancel Open Orders (Sell/Buy). 
 
-__[POST]__
+__[POST]__&nbsp;&nbsp;&nbsp;``https://api.btrade.co.kr/api/private/v1/order/cancel``
 
 ```
 {
@@ -597,7 +600,7 @@ __[Input Header]__
 |Authorization|Access Token|
 |Content-Type|The Content-Type entity header is used to indicate the media type of the resource.<br/>(application/json;charset=UTF-8)
 
-__[Input Parameter]__
+__[Input Parameters]__
 
 |&nbsp;&nbsp;&nbsp;Parameter Name&nbsp;&nbsp;&nbsp;|Description|
 |:------------:|:---------:|
@@ -607,18 +610,18 @@ __[Input Parameter]__
 |nonce|Current Date (ex: 20190208)|
 |hstr|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sha-256(nonce, currency, secretKey, sheckSum)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|
 
-__[Output Parameter]__
+__[Response]__
 
-|&nbsp;&nbsp;&nbsp;Parameter Name&nbsp;&nbsp;&nbsp;|Description|
+|&nbsp;&nbsp;&nbsp;Response Field&nbsp;&nbsp;&nbsp;|Description|
 |:------------:|:---------:|
 |status|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0000: Normal / others: error&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|
 
 &nbsp;
-&nbsp;
+---
 
-### Place - Place and Execute orders (Sell/Buy).
+### 3-5.Place - Place and Execute orders (Sell/Buy).
 
-__[POST]__
+__[POST]__&nbsp;&nbsp;&nbsp;``https://api.btrade.co.kr/api/private/v1/order/place``
 
 ```
 {
@@ -660,7 +663,7 @@ __[Input Header]__
 |Content-Type|The Content-Type entity header is used to indicate the media type of the resource.<br/>(application/json;charset=UTF-8)
 
 
-__[Input Parameter]__
+__[Input Parameters]__
 
 |&nbsp;&nbsp;&nbsp;Parameter Name&nbsp;&nbsp;&nbsp;|Description|
 |:------------:|:---------:|
@@ -670,21 +673,21 @@ __[Input Parameter]__
 |amount|Order Amount|
 |fee_type|Fee Type (K-KRW Fee, C-Coin Fee) <br>* Only KRW fee is available when selling. |
 
-__[Output Parameter]__
+__[Response]__
 
-|&nbsp;&nbsp;&nbsp;Parameter Name&nbsp;&nbsp;&nbsp;|Description|
+|&nbsp;&nbsp;&nbsp;Response Field&nbsp;&nbsp;&nbsp;|Description|
 |:------------:|:---------:|
 |status| 0000: Normal / others: error|
 |order_id|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Order Number&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|
 
 &nbsp;
+
+---
 &nbsp;
 
 ### Status
 
----
-
-#### 1. Token Error
+#### 4-1. Token Error
 
 |&nbsp;&nbsp;&nbsp;Status Value&nbsp;&nbsp;&nbsp;|Description|
 |:------------:|:---------:|
@@ -698,7 +701,10 @@ __[Output Parameter]__
 |2008|MEMBER API is not authorized.|
 |2009|MEMBER API is not allow ip.|
 
-#### 2. Exception
+&nbsp;
+---
+
+#### 4-2. Exception
 
 |&nbsp;&nbsp;&nbsp;Status Value&nbsp;&nbsp;&nbsp;|Description|
 |:------------:|:---------:|
